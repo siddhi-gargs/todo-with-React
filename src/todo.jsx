@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "./todo.css";
+import style from "./todo.module.css";
 
 class Input extends Component {
   constructor(props) {
@@ -23,28 +23,28 @@ class Input extends Component {
 
   render() {
     return (
-      <>
+      <p>
         <input
           type="text"
           value={this.state.value}
           onChange={this.change}
           onKeyDown={this.saveAndClear}
         />
-      </>
+      </p>
     );
   }
 }
 
 function Item(props) {
   return (
-    <>
+    <p>
       <input
         type="checkbox"
         checked={props.task.done}
         onChange={() => props.toggleStatus(props.task.taskId, !props.task.done)}
       />
       <span>{props.task.task}</span>
-    </>
+    </p>
   );
 }
 
@@ -54,12 +54,12 @@ class Todo extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
-      <p>
-        <div>{this.props.todo.title}</div>
+      <div>
+        <h2>{this.props.todo.title}</h2>
         <Input
           onSubmit={(task) => this.props.addTask(this.props.todo.todoId, task)}
+          className={style.addTask}
         />
         {this.props.tasks.map((task) => (
           <Item
@@ -77,7 +77,7 @@ class Todo extends Component {
           toggleStatus={this.props.toggle}
           
         /> */}
-      </p>
+      </div>
     );
   }
 }
@@ -170,13 +170,13 @@ class MultipleTodos extends Component {
   render() {
     return (
       <div>
-        <h2>Add New To-Do List</h2>
-        <Input onSubmit={this.addTodo} />
+        <h1>Add New To-Do List</h1>
+        <Input className={style.addTodo} onSubmit={this.addTodo} />
         {this.state.todos.map((todo) => (
           <Todo
             todo={todo}
             tasks={todo.tasks}
-            key={todo.taskId}
+            key={todo.todoId}
             addTask={this.addTask}
             toggle={this.toggle}
             probs={this.props}
@@ -197,9 +197,9 @@ function App() {
   const todoId = generateId();
 
   return (
-    <div>
+    <main style={{ margin: "0px 500px", padding: "20px 50px" }}>
       <MultipleTodos taskId={taskId} todoId={todoId} />
-    </div>
+    </main>
   );
 }
 
